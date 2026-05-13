@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Usage & Cost — SQL Data Consulting</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+</head>
+<body>
+
+<div class="banner">
+  <a href="/" class="banner-brand">SQL Data <small>Consulting</small></a>
+</div>
+
+<div class="sidebar">
+  <div class="sidebar-section">Navigate</div>
+  <a href="/">Home</a>
+  <a href="/benchmark.html">Benchmark</a>
+  <a href="/usage.html" class="active">Usage & Cost</a>
+  <a href="/methodology.html">Methodology</a>
+  <a href="/contact.html">Contact</a>
+</div>
+
+<div class="main">
+
+  <h1>DeepSeek Usage & Cost</h1>
+  <div class="subtitle">
+    Daily session volume and estimated API cost across the Hermes agent deployment.
+  </div>
+
+  <p class="lead">
+    Data extracted from 575 session logs across 20 days (22 Apr – 13 May 2026).
+    Costs estimated from message count using DeepSeek v4 Flash pricing ($0.15/M input, $0.60/M output)
+    and v4 Pro pricing ($2.00/M input, $8.00/M output).
+  </p>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:28px;">
+    <div class="card" style="text-align:center;">
+      <div style="font-size:1.8rem;font-weight:700;color:var(--accent);">575</div>
+      <div style="font-size:0.78rem;color:var(--text-muted);">Sessions</div>
+    </div>
+    <div class="card" style="text-align:center;">
+      <div style="font-size:1.8rem;font-weight:700;color:#34d399;">$137</div>
+      <div style="font-size:0.78rem;color:var(--text-muted);">Est. Total Cost</div>
+    </div>
+    <div class="card" style="text-align:center;">
+      <div style="font-size:1.8rem;font-weight:700;color:#fbbf24;">20</div>
+      <div style="font-size:0.78rem;color:var(--text-muted);">Days</div>
+    </div>
+    <div class="card" style="text-align:center;">
+      <div style="font-size:1.8rem;font-weight:700;color:#f87171;">$65</div>
+      <div style="font-size:0.78rem;color:var(--text-muted);">Peak Day (28 Apr)</div>
+    </div>
+  </div>
+
+  <div class="chart-container" style="max-width:100%;">
+    <canvas id="usageChart" height="260"></canvas>
+  </div>
+
+  <div class="chart-container" style="max-width:100%;">
+    <canvas id="costChart" height="200"></canvas>
+  </div>
+
+  <h2>Spike Analysis</h2>
+  <p>The 27–28 April spike accounts for <strong>46% of total sessions</strong> and <strong>67% of total cost</strong>.
+  These were cron-driven orchestrator runs using the <strong>deepseek-v4-pro</strong> model for
+  Planka Kanban review cycles. After switching to deepseek-v4-flash on 28 April,
+  daily cost fell from <strong>$65 → ~$3/day</strong> — a <strong>95% reduction</strong>.</p>
+
+  <div class="card" style="max-width:700px;">
+    <h3>Cost breakdown by model</h3>
+    <table style="width:100%;border-collapse:collapse;font-size:0.88rem;margin-top:12px;">
+      <thead>
+        <tr>
+          <th style="text-align:left;padding:6px 8px;border-bottom:1px solid #e2e4e8;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.06em;color:#6b7280;">Model</th>
+          <th style="text-align:right;padding:6px 8px;border-bottom:1px solid #e2e4e8;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.06em;color:#6b7280;">Sessions</th>
+          <th style="text-align:right;padding:6px 8px;border-bottom:1px solid #e2e4e8;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.06em;color:#6b7280;">Est. Cost</th>
+        </tr>
+      </thead>
+      <tbody id="modelBreakdown"></tbody>
+    </table>
+  </div>
+
+  <div class="card" style="max-width:700px;">
+    <h3>Largest sessions (by message count)</h3>
+    <table style="width:100%;border-collapse:collapse;font-size:0.88rem;margin-top:12px;">
+      <thead>
+        <tr>
+          <th style="text-align:left;padding:6px 8px;border-bottom:1px solid #e2e4e8;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.06em;color:#6b7280;">Date</th>
+          <th style="text-align:left;padding:6px 8px;border-bottom:1px solid #e2e4e8;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.06em;color:#6b7280;">Session</th>
+          <th style="text-align:right;padding:6px 8px;border-bottom:1px solid #e2e4e8;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.06em;color:#6b7280;">Messages</th>
+          <th style="text-align:right;padding:6px 8px;border-bottom:1px solid #e2e4e8;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.06em;color:#6b7280;">Cost</th>
+        </tr>
+      </thead>
+      <tbody id="spikeTable"></tbody>
+    </table>
+  </div>
+
+  <h2>Methodology</h2>
+  <p>Costs are estimated from message count — each message assumed ~3,000 tokens on average
+  (2,000 prompt + 1,000 completion), which is conservative for short exchanges but
+  underestimates long-context sessions. Actual API billing data from DeepSeek's dashboard
+  would give exact figures. The session data comes from local Hermes agent logs;
+  sessions created by automated cron jobs and gateway integrations are included.</p>
+
+  <div class="footer">
+    <p>SQL Data Consulting &middot; Dublin, Ireland</p>
+  </div>
+
+</div>
+
+<script>
+Chart.defaults.font.family = "'Inter', -apple-system, sans-serif";
+Chart.defaults.font.size = 11;
+Chart.defaults.color = '#6b7280';
+
+fetch('pages/usage_data.json')
+  .then(r => r.json())
+  .then(data => {
+    const dates = data.daily.map(d => d.date.slice(5));
+    const sessions = data.daily.map(d => d.sessions);
+    const costs = data.daily.map(d => d.cost);
+
+    // Combined sessions + cost chart
+    new Chart(document.getElementById('usageChart'), {
+      type: 'bar',
+      data: {
+        labels: dates,
+        datasets: [{
+          label: 'Sessions',
+          data: sessions,
+          backgroundColor: '#6c8cff',
+          borderRadius: 3,
+          order: 2,
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { display: true, position: 'top', labels: { boxWidth: 12, padding: 12 } },
+          title: { display: true, text: 'Daily Session Volume', font: { size: 13, weight: '600' }, padding: { bottom: 12 } }
+        },
+        scales: {
+          x: { grid: { display: false }, ticks: { maxTicksLimit: 12 } },
+          y: { grid: { color: 'rgba(0,0,0,0.05)' }, beginAtZero: true,
+               title: { display: true, text: 'Sessions' } }
+        }
+      }
+    });
+
+    // Cost chart
+    const spikeDates = new Set(data.spikes.filter(s => s.note && s.note.startsWith('spike')).map(s => s.date));
+    const costColors = costs.map((c, i) => spikeDates.has(data.daily[i].date) ? '#f87171' : '#34d399');
+
+    new Chart(document.getElementById('costChart'), {
+      type: 'bar',
+      data: {
+        labels: dates,
+        datasets: [{
+          label: 'Est. Cost ($)',
+          data: costs,
+          backgroundColor: costColors,
+          borderRadius: 3,
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { display: true, position: 'top', labels: { boxWidth: 12, padding: 12 } },
+          title: { display: true, text: 'Daily Estimated Cost (red = spikes)', font: { size: 13, weight: '600' }, padding: { bottom: 12 } },
+          tooltip: {
+            callbacks: {
+              afterLabel: function(ctx) {
+                const day = data.daily[ctx.dataIndex];
+                const models = Object.entries(day.models).map(([m,c]) => `${m}: ${c}`).join(', ');
+                return 'Models: ' + models;
+              }
+            }
+          }
+        },
+        scales: {
+          x: { grid: { display: false }, ticks: { maxTicksLimit: 12 } },
+          y: { grid: { color: 'rgba(0,0,0,0.05)' }, beginAtZero: true,
+               title: { display: true, text: 'Cost ($)' } }
+        }
+      }
+    });
+
+    // Model breakdown table
+    const modelTotals = {};
+    data.daily.forEach(d => {
+      Object.entries(d.models).forEach(([m, c]) => {
+        if (!modelTotals[m]) modelTotals[m] = { sessions: 0 };
+        modelTotals[m].sessions += c;
+      });
+    });
+    // Estimate per-model cost (simplified — average of all daily costs weighted by session count)
+    const totalSessions = data.daily.reduce((s, d) => s + d.sessions, 0);
+    const totalCost = data.daily.reduce((s, d) => s + d.cost, 0);
+    const modelBody = document.getElementById('modelBreakdown');
+    Object.entries(modelTotals).sort((a,b) => b[1].sessions - a[1].sessions).forEach(([model, info]) => {
+      const pct = info.sessions / totalSessions;
+      const estCost = (totalCost * pct).toFixed(2);
+      const row = `<tr><td style="padding:8px;">${model}</td>
+        <td style="padding:8px;text-align:right;">${info.sessions}</td>
+        <td style="padding:8px;text-align:right;font-weight:600;">$${estCost}</td></tr>`;
+      modelBody.innerHTML += row;
+    });
+
+    // Largest sessions table
+    const spikeBody = document.getElementById('spikeTable');
+    const topSpikes = data.spikes
+      .filter(s => s.session)
+      .sort((a, b) => b.msgs - a.msgs)
+      .slice(0, 15);
+    topSpikes.forEach(s => {
+      const sid = s.session.length > 40 ? s.session.slice(0, 37) + '...' : s.session;
+      const row = `<tr><td style="padding:6px 8px;">${s.date.slice(5)}</td>
+        <td style="padding:6px 8px;font-size:0.75rem;font-family:monospace;">${sid}</td>
+        <td style="padding:6px 8px;text-align:right;">${s.msgs}</td>
+        <td style="padding:6px 8px;text-align:right;">$${s.cost.toFixed(2)}</td></tr>`;
+      spikeBody.innerHTML += row;
+    });
+  });
+</script>
+
+</body>
+</html>

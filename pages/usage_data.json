@@ -1,0 +1,1137 @@
+{
+  "period": "2026-04-22 to 2026-05-13",
+  "total_days": 20,
+  "total_sessions": 575,
+  "total_cost": 137.23,
+  "daily": [
+    {
+      "date": "2026-04-22",
+      "sessions": 15,
+      "cost": 3.35,
+      "models": {
+        "deepseek-reasoner": 15
+      },
+      "platforms": {
+        "cli": 12,
+        "mattermost": 3
+      }
+    },
+    {
+      "date": "2026-04-24",
+      "sessions": 45,
+      "cost": 4.17,
+      "models": {
+        "deepseek-chat": 39,
+        "deepseek-reasoner": 4,
+        "deepseek-v4-flash": 2
+      },
+      "platforms": {
+        "mattermost": 7,
+        "cli": 25,
+        "cron": 13
+      }
+    },
+    {
+      "date": "2026-04-26",
+      "sessions": 1,
+      "cost": 0.02,
+      "models": {
+        "deepseek-chat": 1
+      },
+      "platforms": {
+        "cli": 1
+      }
+    },
+    {
+      "date": "2026-04-27",
+      "sessions": 56,
+      "cost": 26.13,
+      "models": {
+        "deepseek-v4-flash": 32,
+        "deepseek-v4-pro": 24
+      },
+      "platforms": {
+        "cli": 20,
+        "mattermost": 1,
+        "cron": 32,
+        "webui": 3
+      }
+    },
+    {
+      "date": "2026-04-28",
+      "sessions": 209,
+      "cost": 65.18,
+      "models": {
+        "deepseek-v4-pro": 103,
+        "deepseek-v4-flash": 106
+      },
+      "platforms": {
+        "cron": 193,
+        "cli": 10,
+        "mattermost": 4,
+        "api_server": 2
+      }
+    },
+    {
+      "date": "2026-04-29",
+      "sessions": 7,
+      "cost": 0.64,
+      "models": {
+        "deepseek-v4-flash": 7
+      },
+      "platforms": {
+        "mattermost": 4,
+        "api_server": 3
+      }
+    },
+    {
+      "date": "2026-04-30",
+      "sessions": 17,
+      "cost": 0.72,
+      "models": {
+        "deepseek-v4-flash": 17
+      },
+      "platforms": {
+        "api_server": 17
+      }
+    },
+    {
+      "date": "2026-05-01",
+      "sessions": 16,
+      "cost": 2.19,
+      "models": {
+        "deepseek-v4-flash": 16
+      },
+      "platforms": {
+        "cli": 13,
+        "mattermost": 1,
+        "api_server": 2
+      }
+    },
+    {
+      "date": "2026-05-02",
+      "sessions": 27,
+      "cost": 3.37,
+      "models": {
+        "deepseek-v4-flash": 27
+      },
+      "platforms": {
+        "mattermost": 5,
+        "cli": 22
+      }
+    },
+    {
+      "date": "2026-05-03",
+      "sessions": 15,
+      "cost": 1.47,
+      "models": {
+        "deepseek-v4-flash": 15
+      },
+      "platforms": {
+        "cli": 11,
+        "mattermost": 4
+      }
+    },
+    {
+      "date": "2026-05-04",
+      "sessions": 10,
+      "cost": 0.31,
+      "models": {
+        "deepseek-v4-flash": 10
+      },
+      "platforms": {
+        "cron": 8,
+        "api_server": 2
+      }
+    },
+    {
+      "date": "2026-05-05",
+      "sessions": 16,
+      "cost": 1.3,
+      "models": {
+        "deepseek-v4-flash": 16
+      },
+      "platforms": {
+        "cli": 16
+      }
+    },
+    {
+      "date": "2026-05-06",
+      "sessions": 19,
+      "cost": 2.85,
+      "models": {
+        "deepseek-v4-flash": 19
+      },
+      "platforms": {
+        "cli": 18,
+        "cron": 1
+      }
+    },
+    {
+      "date": "2026-05-07",
+      "sessions": 22,
+      "cost": 5.87,
+      "models": {
+        "deepseek-v4-flash": 22
+      },
+      "platforms": {
+        "cli": 21,
+        "cron": 1
+      }
+    },
+    {
+      "date": "2026-05-08",
+      "sessions": 1,
+      "cost": 0.11,
+      "models": {
+        "deepseek-v4-flash": 1
+      },
+      "platforms": {
+        "cron": 1
+      }
+    },
+    {
+      "date": "2026-05-09",
+      "sessions": 4,
+      "cost": 0.11,
+      "models": {
+        "deepseek-v4-flash": 4
+      },
+      "platforms": {
+        "curator": 1,
+        "mattermost": 2,
+        "cron": 1
+      }
+    },
+    {
+      "date": "2026-05-10",
+      "sessions": 14,
+      "cost": 1.57,
+      "models": {
+        "deepseek-v4-flash": 14
+      },
+      "platforms": {
+        "cli": 13,
+        "cron": 1
+      }
+    },
+    {
+      "date": "2026-05-11",
+      "sessions": 31,
+      "cost": 6.94,
+      "models": {
+        "deepseek-v4-flash": 31
+      },
+      "platforms": {
+        "cli": 29,
+        "cron": 2
+      }
+    },
+    {
+      "date": "2026-05-12",
+      "sessions": 31,
+      "cost": 4.61,
+      "models": {
+        "deepseek-v4-flash": 31
+      },
+      "platforms": {
+        "cli": 29,
+        "cron": 2
+      }
+    },
+    {
+      "date": "2026-05-13",
+      "sessions": 19,
+      "cost": 6.33,
+      "models": {
+        "deepseek-v4-flash": 19
+      },
+      "platforms": {
+        "cli": 18,
+        "cron": 1
+      }
+    }
+  ],
+  "spikes": [
+    {
+      "date": "2026-04-24",
+      "session": "20260424_091127_592f7a",
+      "msgs": 162,
+      "cost": 0.1458,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-04-24",
+      "session": "20260424_101441_f12383",
+      "msgs": 157,
+      "cost": 0.1413,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-04-24",
+      "session": "20260424_101749_270aa9",
+      "msgs": 205,
+      "cost": 0.1845,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-04-24",
+      "session": "20260424_102444_5a93c2",
+      "msgs": 209,
+      "cost": 0.1881,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-04-24",
+      "session": "20260424_102557_0177d3",
+      "msgs": 271,
+      "cost": 0.2439,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-04-24",
+      "session": "20260424_103347_e476f2",
+      "msgs": 276,
+      "cost": 0.2484,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-04-24",
+      "session": "20260424_103629_e57f32",
+      "msgs": 313,
+      "cost": 0.2817,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-04-27",
+      "session": "20260427_133742_c2d8a1",
+      "msgs": 616,
+      "cost": 0.5544,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-04-27",
+      "session": "20260427_135501_20b80c",
+      "msgs": 180,
+      "cost": 0.162,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-04-27",
+      "session": "20260427_140735_5195b2",
+      "msgs": 274,
+      "cost": 0.2466,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-04-27",
+      "session": "20260427_141307_3dbcca",
+      "msgs": 314,
+      "cost": 0.2826,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-04-27",
+      "session": "20260427_143741_23dc1a",
+      "msgs": 525,
+      "cost": 0.4725,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-04-27",
+      "session": "20260427_160345_fe7c24",
+      "msgs": 624,
+      "cost": 0.5616,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-04-27",
+      "session": "20260427_195602_48ccf9",
+      "msgs": 697,
+      "cost": 0.6273,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-04-27",
+      "session": "20260427_201610_6997fa",
+      "msgs": 260,
+      "cost": 0.234,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-04-27",
+      "session": "20260427_202315_9c2fff",
+      "msgs": 361,
+      "cost": 0.3249,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-04-27",
+      "session": "20260427_202943_27c732",
+      "msgs": 439,
+      "cost": 0.3951,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-04-27",
+      "session": "20260427_203957_49eb50",
+      "msgs": 562,
+      "cost": 0.5058,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-04-27",
+      "session": "20260427_205504_a608f6",
+      "msgs": 639,
+      "cost": 0.5751,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-04-27",
+      "session": "20260427_210011_46f1d3",
+      "msgs": 687,
+      "cost": 0.6183,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-04-27",
+      "session": "20260427_212354_1ce88d",
+      "msgs": 275,
+      "cost": 0.2475,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-04-27",
+      "session": "20260427_215134_dc5552",
+      "msgs": 238,
+      "cost": 0.2142,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-04-28",
+      "session": "20260428_105014_9a1b93",
+      "msgs": 366,
+      "cost": 0.3294,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-04-28",
+      "session": "20260428_094400_bac30e",
+      "msgs": 223,
+      "cost": 0.2007,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-04-28",
+      "session": "20260428_105003_9b0bb6",
+      "msgs": 282,
+      "cost": 0.2538,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-04-28",
+      "session": "20260428_134026_f03f1e",
+      "msgs": 215,
+      "cost": 0.1935,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-04-28",
+      "session": "20260428_144305_616b4e",
+      "msgs": 383,
+      "cost": 0.3447,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-04-28",
+      "session": "cron_edfbd7c8666b_20260428_024007",
+      "msgs": 172,
+      "cost": 0.1548,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-04-28",
+      "session": "cron_edfbd7c8666b_20260428_062050",
+      "msgs": 256,
+      "cost": 0.2304,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-04-28",
+      "session": "cron_edfbd7c8666b_20260428_072025",
+      "msgs": 223,
+      "cost": 0.2007,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-04-29",
+      "session": "20260427_142548_f7b6ae20",
+      "msgs": 187,
+      "cost": 0.1683,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-04-29",
+      "session": "20260429_230624_0d6151",
+      "msgs": 198,
+      "cost": 0.1782,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-01",
+      "session": "20260501_084204_1730a5",
+      "msgs": 487,
+      "cost": 0.4383,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-01",
+      "session": "20260501_093919_baf81b",
+      "msgs": 376,
+      "cost": 0.3384,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-01",
+      "session": "20260501_112532_395a8a",
+      "msgs": 194,
+      "cost": 0.1746,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-01",
+      "session": "20260501_163327_127162",
+      "msgs": 168,
+      "cost": 0.1512,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-01",
+      "session": "20260501_173844_786db5",
+      "msgs": 198,
+      "cost": 0.1782,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-01",
+      "session": "20260501_200023_0da917",
+      "msgs": 187,
+      "cost": 0.1683,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-01",
+      "session": "20260501_202318_d9733f",
+      "msgs": 151,
+      "cost": 0.1359,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-01",
+      "session": "20260501_225715_368eb6",
+      "msgs": 190,
+      "cost": 0.171,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-02",
+      "session": "20260502_090737_a3c05a",
+      "msgs": 329,
+      "cost": 0.2961,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-02",
+      "session": "20260502_133714_73e3cc",
+      "msgs": 218,
+      "cost": 0.1962,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-02",
+      "session": "20260502_143621_8a69c6",
+      "msgs": 273,
+      "cost": 0.2457,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-02",
+      "session": "20260502_145153_97d7d2",
+      "msgs": 318,
+      "cost": 0.2862,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-02",
+      "session": "20260502_202158_d070b9",
+      "msgs": 281,
+      "cost": 0.2529,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-02",
+      "session": "20260502_211427_441a16",
+      "msgs": 155,
+      "cost": 0.1395,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-02",
+      "session": "20260502_212815_ddde17",
+      "msgs": 213,
+      "cost": 0.1917,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-02",
+      "session": "20260502_213707_9b16b8",
+      "msgs": 297,
+      "cost": 0.2673,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-02",
+      "session": "20260502_222228_98b3fc",
+      "msgs": 281,
+      "cost": 0.2529,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-03",
+      "session": "20260503_000313_31f8c2",
+      "msgs": 217,
+      "cost": 0.1953,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-03",
+      "session": "20260503_002529_0db985",
+      "msgs": 162,
+      "cost": 0.1458,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-03",
+      "session": "20260503_003045_3e2d9a",
+      "msgs": 190,
+      "cost": 0.171,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-03",
+      "session": "20260503_003832_0f4770",
+      "msgs": 220,
+      "cost": 0.198,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-03",
+      "session": "20260503_130019_e49113",
+      "msgs": 164,
+      "cost": 0.1476,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-03",
+      "session": "20260503_131854_ba28a8",
+      "msgs": 174,
+      "cost": 0.1566,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-05",
+      "session": "20260505_222015_eb71b3",
+      "msgs": 208,
+      "cost": 0.1872,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-05",
+      "session": "20260505_223445_84e3c5",
+      "msgs": 180,
+      "cost": 0.162,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-05",
+      "session": "20260505_224006_ea078c",
+      "msgs": 224,
+      "cost": 0.2016,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-06",
+      "session": "20260506_211639_7b8c6a",
+      "msgs": 416,
+      "cost": 0.3744,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-06",
+      "session": "20260506_213654_f50631",
+      "msgs": 159,
+      "cost": 0.1431,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-06",
+      "session": "20260506_220418_c4cd45",
+      "msgs": 224,
+      "cost": 0.2016,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-06",
+      "session": "20260506_221213_b4853a",
+      "msgs": 306,
+      "cost": 0.2754,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-06",
+      "session": "20260506_221800_d0b329",
+      "msgs": 380,
+      "cost": 0.342,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-06",
+      "session": "20260506_222905_623d7d",
+      "msgs": 443,
+      "cost": 0.3987,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-06",
+      "session": "20260506_225031_3e958b",
+      "msgs": 157,
+      "cost": 0.1413,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-07",
+      "session": "20260507_090750_3e7b58",
+      "msgs": 756,
+      "cost": 0.6804,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-07",
+      "session": "20260507_093523_302985",
+      "msgs": 228,
+      "cost": 0.2052,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-07",
+      "session": "20260507_111109_aabec9",
+      "msgs": 283,
+      "cost": 0.2547,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-07",
+      "session": "20260507_115828_b162e4",
+      "msgs": 453,
+      "cost": 0.4077,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-07",
+      "session": "20260507_121108_07af7a",
+      "msgs": 549,
+      "cost": 0.4941,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-07",
+      "session": "20260507_141352_f5d881",
+      "msgs": 590,
+      "cost": 0.531,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-07",
+      "session": "20260507_161143_50bfc7",
+      "msgs": 633,
+      "cost": 0.5697,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-07",
+      "session": "20260507_165659_8f381f",
+      "msgs": 665,
+      "cost": 0.5985,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-07",
+      "session": "20260507_171053_0eae7f",
+      "msgs": 726,
+      "cost": 0.6534,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-07",
+      "session": "20260507_172754_76c4d9",
+      "msgs": 773,
+      "cost": 0.6957,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-07",
+      "session": "20260507_192106_c63968",
+      "msgs": 158,
+      "cost": 0.1422,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-10",
+      "session": "20260510_094107_a4f0a1",
+      "msgs": 296,
+      "cost": 0.2664,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-10",
+      "session": "20260510_233830_5a5231",
+      "msgs": 717,
+      "cost": 0.6453,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-11",
+      "session": "20260511_131358_2e1991",
+      "msgs": 227,
+      "cost": 0.2043,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-11",
+      "session": "20260511_132025_9b4b17",
+      "msgs": 261,
+      "cost": 0.2349,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-11",
+      "session": "20260511_132506_f8e65c",
+      "msgs": 292,
+      "cost": 0.2628,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-11",
+      "session": "20260511_133244_7047fc",
+      "msgs": 383,
+      "cost": 0.3447,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-11",
+      "session": "20260511_134927_2f5c15",
+      "msgs": 423,
+      "cost": 0.3807,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-11",
+      "session": "20260511_135427_18c053",
+      "msgs": 451,
+      "cost": 0.4059,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-11",
+      "session": "20260511_135926_0cfc0b",
+      "msgs": 491,
+      "cost": 0.4419,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-11",
+      "session": "20260511_141825_44e2a5",
+      "msgs": 593,
+      "cost": 0.5337,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-11",
+      "session": "20260511_142855_b7244a",
+      "msgs": 659,
+      "cost": 0.5931,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-11",
+      "session": "20260511_144353_bf1d57",
+      "msgs": 709,
+      "cost": 0.6381,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-11",
+      "session": "20260511_150508_71b62a",
+      "msgs": 541,
+      "cost": 0.4869,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-11",
+      "session": "20260511_151809_f89fb0",
+      "msgs": 165,
+      "cost": 0.1485,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-11",
+      "session": "20260511_155703_de6709",
+      "msgs": 274,
+      "cost": 0.2466,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-11",
+      "session": "20260511_161552_e833d9",
+      "msgs": 301,
+      "cost": 0.2709,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-11",
+      "session": "20260511_183221_bfa841",
+      "msgs": 462,
+      "cost": 0.4158,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-11",
+      "session": "20260511_202118_1b20e8",
+      "msgs": 176,
+      "cost": 0.1584,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-12",
+      "session": "20260512_080844_585103",
+      "msgs": 487,
+      "cost": 0.4383,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-12",
+      "session": "20260512_082331_58f9c8",
+      "msgs": 490,
+      "cost": 0.441,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-12",
+      "session": "20260512_094946_4e0425",
+      "msgs": 410,
+      "cost": 0.369,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-12",
+      "session": "20260512_100752_348b3b",
+      "msgs": 540,
+      "cost": 0.486,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-12",
+      "session": "20260512_101233_6b4a05",
+      "msgs": 156,
+      "cost": 0.1404,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-12",
+      "session": "20260512_105952_d8807a",
+      "msgs": 320,
+      "cost": 0.288,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-12",
+      "session": "20260512_120613_f904be",
+      "msgs": 365,
+      "cost": 0.3285,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-12",
+      "session": "20260512_120908_6b8479",
+      "msgs": 387,
+      "cost": 0.3483,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-12",
+      "session": "20260512_121252_88b1d3",
+      "msgs": 408,
+      "cost": 0.3672,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-12",
+      "session": "20260512_204651_e05fbe",
+      "msgs": 350,
+      "cost": 0.315,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-12",
+      "session": "20260512_211511_bc2fb5",
+      "msgs": 298,
+      "cost": 0.2682,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-12",
+      "session": "20260512_215315_23f235",
+      "msgs": 151,
+      "cost": 0.1359,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-12",
+      "session": "20260512_220904_7eae0a",
+      "msgs": 173,
+      "cost": 0.1557,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-13",
+      "session": "20260513_072459_0a15df",
+      "msgs": 218,
+      "cost": 0.1962,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-13",
+      "session": "20260513_082515_d74578",
+      "msgs": 219,
+      "cost": 0.1971,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-13",
+      "session": "20260513_082626_35b34d",
+      "msgs": 455,
+      "cost": 0.4095,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-13",
+      "session": "20260513_083250_435096",
+      "msgs": 187,
+      "cost": 0.1683,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-13",
+      "session": "20260513_084853_0dcb98",
+      "msgs": 664,
+      "cost": 0.5976,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-13",
+      "session": "20260513_085541_a96eac",
+      "msgs": 389,
+      "cost": 0.3501,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-13",
+      "session": "20260513_092059_461654",
+      "msgs": 429,
+      "cost": 0.3861,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-13",
+      "session": "20260513_101220_ae0971",
+      "msgs": 179,
+      "cost": 0.1611,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-13",
+      "session": "20260513_115916_2ebd54",
+      "msgs": 365,
+      "cost": 0.3285,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-13",
+      "session": "20260513_123842_b81a88",
+      "msgs": 402,
+      "cost": 0.3618,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-13",
+      "session": "20260513_124605_fdf7b1",
+      "msgs": 457,
+      "cost": 0.4113,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-13",
+      "session": "20260513_130051_be2aad",
+      "msgs": 573,
+      "cost": 0.5157,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-13",
+      "session": "20260513_150716_18f118",
+      "msgs": 573,
+      "cost": 0.5157,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-13",
+      "session": "20260513_152607_4aa063",
+      "msgs": 637,
+      "cost": 0.5733,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-13",
+      "session": "20260513_152617_c4a4f4",
+      "msgs": 467,
+      "cost": 0.4203,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-13",
+      "session": "20260513_153134_278c67",
+      "msgs": 461,
+      "cost": 0.4149,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-05-13",
+      "session": "cron_0586e7c2c2ba_20260513_080027",
+      "msgs": 161,
+      "cost": 0.1449,
+      "note": "heavy session"
+    },
+    {
+      "date": "2026-04-27",
+      "msgs": 9645,
+      "cost": 26.13,
+      "note": "spike: 26.13x avg"
+    },
+    {
+      "date": "2026-04-28",
+      "msgs": 12931,
+      "cost": 65.18,
+      "note": "spike: 65.18x avg"
+    }
+  ]
+}
