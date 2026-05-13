@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Benchmark — SQL Data Consulting</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="banner">
+  <a href="/" class="banner-brand">SQL Data <small>Consulting</small></a>
+</div>
+
+<div class="sidebar">
+  <div class="sidebar-section">Navigate</div>
+  <a href="/">Home</a>
+  <a href="/benchmark.html" class="active">Benchmark</a>
+  <a href="/methodology.html">Methodology</a>
+  <a href="/contact.html">Contact</a>
+</div>
+
+<div class="main">
+
+  <h1>PPR Engine Benchmark</h1>
+  <div class="subtitle">
+    5 engines · 11 queries · 783,755 transactions · Ireland's Property Price Register
+  </div>
+
+  <p class="lead">
+    A full benchmarking of DuckDB, Polars, Pandas, Dask, and Zig against the national
+    Irish property register — 92 MB of real transaction data from 2010 through May 2026.
+    Stress queries include standard aggregations, self-joins, rolling windows,
+    percentile distributions, and multi-dimensional GROUP BYs.
+  </p>
+
+  <div class="card" style="max-width:700px;">
+    <h3>Final results (11 queries, 4 cores, 16 GiB LXC)</h3>
+    <table style="width:100%;border-collapse:collapse;font-size:0.88rem;margin-top:12px;">
+      <thead>
+        <tr>
+          <th style="text-align:left;padding:6px 8px;border-bottom:1px solid #e2e4e8;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.06em;color:#6b7280;">Rank</th>
+          <th style="text-align:left;padding:6px 8px;border-bottom:1px solid #e2e4e8;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.06em;color:#6b7280;">Engine</th>
+          <th style="text-align:right;padding:6px 8px;border-bottom:1px solid #e2e4e8;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.06em;color:#6b7280;">Ingest</th>
+          <th style="text-align:right;padding:6px 8px;border-bottom:1px solid #e2e4e8;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.06em;color:#6b7280;">Queries</th>
+          <th style="text-align:right;padding:6px 8px;border-bottom:1px solid #e2e4e8;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.06em;color:#6b7280;">Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td style="padding:8px;color:#34d399;">🥇</td><td style="padding:8px;">Zig</td><td style="padding:8px;text-align:right;">0.305s</td><td style="padding:8px;text-align:right;">0.158s</td><td style="padding:8px;text-align:right;font-weight:600;">0.464s</td></tr>
+        <tr><td style="padding:8px;color:#34d399;">🥈</td><td style="padding:8px;">Polars</td><td style="padding:8px;text-align:right;">0.096s</td><td style="padding:8px;text-align:right;">0.929s</td><td style="padding:8px;text-align:right;font-weight:600;">1.025s</td></tr>
+        <tr><td style="padding:8px;color:#6c8cff;">🥉</td><td style="padding:8px;">DuckDB</td><td style="padding:8px;text-align:right;">0.265s</td><td style="padding:8px;text-align:right;">1.207s</td><td style="padding:8px;text-align:right;font-weight:600;">1.472s</td></tr>
+        <tr><td style="padding:8px;"></td><td style="padding:8px;">Pandas</td><td style="padding:8px;text-align:right;">1.373s</td><td style="padding:8px;text-align:right;">3.177s</td><td style="padding:8px;text-align:right;font-weight:600;">4.550s</td></tr>
+        <tr><td style="padding:8px;"></td><td style="padding:8px;">Dask</td><td style="padding:8px;text-align:right;">1.085s</td><td style="padding:8px;text-align:right;">10.082s</td><td style="padding:8px;text-align:right;font-weight:600;">11.168s</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p style="margin-top:24px;">
+    <a href="/ppr_benchmark.html" class="btn btn-primary">Open full interactive dashboard →</a>
+  </p>
+
+  <p style="font-size:0.82rem;color:var(--text-muted);margin-top:4px;">
+    Full dashboard includes Chart.js charts, per-engine breakdowns, query stress profiles,
+    memory safety analysis, and non-linear regression results.
+  </p>
+
+</div>
+</body>
+</html>

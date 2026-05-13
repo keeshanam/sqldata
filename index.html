@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SQL Data Consulting</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+</head>
+<body>
+
+<div class="banner">
+  <a href="/" class="banner-brand">SQL Data <small>Consulting</small></a>
+</div>
+
+<div class="sidebar">
+  <div class="sidebar-section">Navigate</div>
+  <a href="/" class="active">Home</a>
+  <a href="/benchmark.html">Benchmark</a>
+  <a href="/methodology.html">Methodology</a>
+  <a href="/contact.html">Contact</a>
+</div>
+
+<div class="main">
+
+  <h1>Data, in motion, with clarity.</h1>
+  <div class="subtitle">
+    SQL-based data consulting for finance, operations, and strategy leaders.
+    From raw source to decision-ready — on time, on schema, on budget.
+  </div>
+
+  <p class="lead">
+    Your data already lives somewhere — ERP, CRM, property register, market feed.
+    The question is not <em>which</em> engine to use, but <em>how fast</em> you can get it into a
+    relational form where it becomes queryable, joinable, and auditable.
+    That's where value unlocks.
+  </p>
+
+  <div class="callout">
+    <p><strong>First principle:</strong> Get data into an RDBMS as early as possible.
+    Relational storage is the most efficient foundation for stream processing, analytics,
+    and reporting. Everything after that — DuckDB for ad-hoc, Polars for batch, streaming
+    for real-time — is a downstream optimisation of a clean upstream source.</p>
+  </div>
+
+  <h2>How we work</h2>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-bottom:8px;">
+
+    <div class="card">
+      <h3>Source &amp; Stage</h3>
+      <p>From any input — CSV, API, JSON, legacy extract — into a normalised relational schema.
+      Deduplicated, typed, timestamped. The foundation of everything that follows.</p>
+    </div>
+
+    <div class="card">
+      <h3>Analyse &amp; Model</h3>
+      <p>SQL-first analytics, window functions, address normalisation, repeat-sale detection,
+      percentile distributions. No black boxes. Every result is reproducible from the source.</p>
+    </div>
+
+    <div class="card">
+      <h3>Surface &amp; Share</h3>
+      <p>Static HTML dashboards, embedded charts, parameterised reports. No server to maintain,
+      no dashboard licence to renew. Push to deploy. Your stakeholders get a link, not a PDF.</p>
+    </div>
+
+  </div>
+
+  <h2>Featured work: PPR Engine Benchmark</h2>
+  <p>Ireland's Property Price Register — 783,755 transactions from 2010 through May 2026.
+  Five query engines benchmarked across 11 analytical stress queries, from simple aggregations
+  to self-joins, rolling windows, and 5-dimensional GROUP BYs.</p>
+
+  <div class="chart-container">
+    <canvas id="benchChart" height="200"></canvas>
+  </div>
+
+  <p style="font-size:0.85rem;color:var(--text-muted);margin-top:-12px;margin-bottom:24px;">
+    11 queries · 783K rows · 92 MB · 5 engines · 4 cores · Static deploy
+    &mdash; <a href="/benchmark.html" style="color:var(--accent)">Full dashboard →</a>
+  </p>
+
+  <p><a href="/benchmark.html" class="btn btn-primary">View the full benchmark →</a></p>
+
+  <h2>Why SQL-first?</h2>
+  <p>
+    Every analytical engine in the benchmark above — DuckDB, Polars, Pandas, even Zig —
+    shares one thing: they perform best when the data is already clean, typed, and relational.
+    The gap between them (0.46s for Zig, 1.03s for Polars, 1.47s for DuckDB) is meaningful
+    at scale, but dwarfed by the cost of <em>not having the data in a queryable form at all</em>.
+  </p>
+  <p>
+    A well-designed SQL schema with normalised dimensions, indexed temporal keys, and
+    validated constraints is the single highest-leverage investment a data function can make.
+    Everything else — the dashboard, the ML pipeline, the weekly report — sits on top of it.
+  </p>
+
+  <div class="footer">
+    <p>SQL Data Consulting &middot; Dublin, Ireland<br>
+    <a href="mailto:aidan@example.com">aidan@example.com</a></p>
+  </div>
+
+</div>
+
+<script>
+Chart.defaults.font.family = "'Inter', -apple-system, sans-serif";
+Chart.defaults.font.size = 11;
+Chart.defaults.color = '#6b7280';
+
+new Chart(document.getElementById('benchChart'), {
+  type: 'bar',
+  data: {
+    labels: ['Zig', 'Polars', 'DuckDB', 'Pandas', 'Dask'],
+    datasets: [{
+      label: 'Total time (s) — lower is better',
+      data: [0.464, 1.025, 1.472, 4.550, 11.168],
+      backgroundColor: ['#a78bfa', '#34d399', '#6c8cff', '#fbbf24', '#f87171'],
+      borderRadius: 4,
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { display: false },
+    },
+    scales: {
+      x: { grid: { display: false } },
+      y: { grid: { color: 'rgba(0,0,0,0.05)' }, beginAtZero: true,
+           title: { display: true, text: 'Seconds', font: { size: 10 } } }
+    }
+  }
+});
+</script>
+
+</body>
+</html>

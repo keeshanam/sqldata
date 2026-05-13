@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Methodology — SQL Data Consulting</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="banner">
+  <a href="/" class="banner-brand">SQL Data <small>Consulting</small></a>
+</div>
+
+<div class="sidebar">
+  <div class="sidebar-section">Navigate</div>
+  <a href="/">Home</a>
+  <a href="/benchmark.html">Benchmark</a>
+  <a href="/methodology.html" class="active">Methodology</a>
+  <a href="/contact.html">Contact</a>
+</div>
+
+<div class="main">
+
+  <h1>Methodology</h1>
+  <div class="subtitle">How we deliver data that works.</div>
+
+  <h2>1. Source-first, schema-second</h2>
+  <p>Every engagement starts with understanding where the data lives and how it moves.
+  We map the source schema to a normalised relational model before writing a single query.
+  This catches inconsistencies early — mismatched keys, implicit nulls, undocumented transforms —
+  that would otherwise surface as "dashboard discrepancies" months later.</p>
+
+  <h2>2. SQL as the interface</h2>
+  <p>Not because SQL is fashionable (it's not), but because it's the only language every
+  analytics tool understands. A clean SQL schema with documented views, indexed temporal
+  columns, and validated foreign keys works with DuckDB, Polars, Tableau, Power BI,
+  Python notebooks, and streaming pipelines equally well. No lock-in, no translation layer.</p>
+
+  <h2>3. Benchmark before you build</h2>
+  <p>Before choosing an engine or architecture, we run the data through a standardised
+  benchmark — ingestion, aggregation, window functions, self-joins, multi-dimensional
+  GROUP BY — across contenders. The PPR Engine Benchmark on this site is a public example.
+  The right choice depends on data volume, update frequency, and who needs to query it.</p>
+
+  <h2>4. Ship static, iterate fast</h2>
+  <p>Dashboards and reports are delivered as static HTML with embedded charts.
+  No server, no login, no SaaS renewal. Push to deploy, version-controlled in git,
+  reproducible from source. If a number looks wrong, the query that produced it is
+  in the same repository.</p>
+
+</div>
+</body>
+</html>

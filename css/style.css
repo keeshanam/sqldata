@@ -1,0 +1,218 @@
+/* SQL Data Consulting — Clean, minimalist layout
+   Target: CFO/COO audience. Professional, trustworthy, fast. */
+
+:root {
+  --nav-bg: #1a1f2e;
+  --nav-text: #9ca3b4;
+  --nav-active: #ffffff;
+  --accent: #4a7a9c;
+  --accent-light: #6b9bc0;
+  --bg: #f4f5f7;
+  --card-bg: #ffffff;
+  --text: #1e2229;
+  --text-muted: #6b7280;
+  --border: #e2e4e8;
+  --banner-height: 56px;
+  --sidebar-width: 200px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── TOP BANNER ── */
+.banner {
+  position: fixed; top: 0; left: 0; right: 0;
+  height: var(--banner-height);
+  background: var(--nav-bg);
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  z-index: 100;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.banner-brand {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+}
+.banner-brand small {
+  font-weight: 400;
+  color: var(--nav-text);
+  font-size: 0.85rem;
+  margin-left: 8px;
+}
+
+/* ── LEFT SIDEBAR ── */
+.sidebar {
+  position: fixed; top: var(--banner-height); left: 0; bottom: 0;
+  width: var(--sidebar-width);
+  background: var(--nav-bg);
+  padding: 24px 0;
+  overflow-y: auto;
+  z-index: 99;
+}
+.sidebar a {
+  display: block;
+  padding: 8px 24px;
+  color: var(--nav-text);
+  font-size: 0.85rem;
+  font-weight: 450;
+  text-decoration: none;
+  transition: color 0.15s, background 0.15s;
+  border-left: 3px solid transparent;
+}
+.sidebar a:hover {
+  color: #fff;
+  background: rgba(255,255,255,0.04);
+}
+.sidebar a.active {
+  color: var(--nav-active);
+  border-left-color: var(--accent-light);
+  background: rgba(255,255,255,0.06);
+}
+.sidebar-section {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: rgba(255,255,255,0.25);
+  padding: 16px 24px 6px;
+  font-weight: 600;
+}
+
+/* ── MAIN CONTENT ── */
+.main {
+  margin-left: var(--sidebar-width);
+  margin-top: var(--banner-height);
+  min-height: calc(100vh - var(--banner-height));
+  padding: 40px 48px;
+  max-width: 960px;
+}
+.main h1 {
+  font-size: 1.75rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
+  color: var(--text);
+}
+.main .subtitle {
+  font-size: 1rem;
+  color: var(--text-muted);
+  margin-bottom: 32px;
+  line-height: 1.5;
+}
+.main h2 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-top: 40px;
+  margin-bottom: 12px;
+  letter-spacing: -0.01em;
+}
+.main p {
+  margin-bottom: 16px;
+  color: #374151;
+  max-width: 680px;
+}
+.main .lead {
+  font-size: 1.05rem;
+  color: var(--text);
+  line-height: 1.7;
+}
+
+/* ── CARDS ── */
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 24px;
+  margin-bottom: 20px;
+}
+.card h3 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.card p {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  margin-bottom: 0;
+}
+
+/* ── INSIGHT CALLOUT ── */
+.callout {
+  background: #eef3f8;
+  border-left: 3px solid var(--accent);
+  padding: 16px 20px;
+  border-radius: 0 6px 6px 0;
+  margin-bottom: 20px;
+  max-width: 680px;
+}
+.callout p {
+  font-size: 0.88rem;
+  margin-bottom: 0;
+  color: #2c3e50;
+}
+.callout strong {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* ── CHARTS ── */
+.chart-container {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 20px;
+  margin: 24px 0;
+  max-width: 700px;
+}
+
+/* ── BUTTONS ── */
+.btn {
+  display: inline-block;
+  padding: 10px 24px;
+  font-size: 0.88rem;
+  font-weight: 500;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+}
+.btn-primary:hover { background: var(--accent-light); }
+.btn-outline {
+  background: transparent;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+}
+.btn-outline:hover {
+  background: var(--accent);
+  color: #fff;
+}
+
+/* ── FOOTER ── */
+.footer {
+  margin-top: 60px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+.footer a { color: var(--accent); text-decoration: none; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 700px) {
+  .sidebar { display: none; }
+  .main { margin-left: 0; padding: 24px 20px; }
+  .banner { padding: 0 16px; }
+}

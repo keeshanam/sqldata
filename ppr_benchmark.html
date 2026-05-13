@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PPR Engine Benchmark — 11 Queries (690K rows, May 2026)</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<style>
+  :root { --bg: #0b0d14; --card: #12151f; --card-border: #1e2235; --text: #d8dce6; --muted: #6b7394; --accent: #6c8cff; --green: #34d399; --orange: #fbbf24; --red: #f87171; --purple: #a78bfa; }
+  * { margin:0;padding:0;box-sizing:border-box; }
+  body { background:var(--bg);color:var(--text);font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.5;min-height:100vh;display:flex;justify-content:center; }
+  .page { max-width:1100px;width:100%;padding:40px 24px; }
+  .header { text-align:center;margin-bottom:40px; }
+  .header h1 { font-size:2rem;font-weight:700;letter-spacing:-0.02em;background:linear-gradient(135deg,var(--accent),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent; }
+  .header .subtitle { margin-top:8px;color:var(--muted);font-size:0.95rem; }
+  .header .badge-row { margin-top:14px;display:flex;justify-content:center;gap:10px;flex-wrap:wrap; }
+  .badge { background:var(--card);border:1px solid var(--card-border);padding:5px 12px;border-radius:20px;font-size:0.78rem;color:var(--muted); }
+  .badge strong { color:var(--text); }
+  .stats { display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;margin-bottom:32px; }
+  .stat-card { background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:18px;text-align:center; }
+  .stat-card .num { font-size:1.6rem;font-weight:700; }
+  .stat-card .label { font-size:0.78rem;color:var(--muted);margin-top:3px; }
+  .stat-card .num.green { color:var(--green); }
+  .stat-card .num.accent { color:var(--accent); }
+  .stat-card .num.orange { color:var(--orange); }
+  .stat-card .num.purple { color:var(--purple); }
+  .stat-card .num.red { color:var(--red); }
+  .chart-row { display:grid;gap:20px;margin-bottom:32px; }
+  .chart-row.cols-2 { grid-template-columns:1fr 1fr; }
+  @media(max-width:700px){.chart-row.cols-2{grid-template-columns:1fr;}}
+  .chart-card { background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:20px; }
+  .chart-card h3 { font-size:0.82rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:14px; }
+  .leaderboard { background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:20px;margin-bottom:32px; }
+  .leaderboard table { width:100%;border-collapse:collapse;font-size:0.85rem; }
+  .leaderboard th { text-align:left;padding:7px 10px;font-size:0.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;border-bottom:1px solid var(--card-border); }
+  .leaderboard td { padding:8px 10px;border-bottom:1px solid rgba(255,255,255,0.04); }
+  .leaderboard tr:last-child td { border-bottom:none; }
+  .leaderboard .num { text-align:right; }
+  .rank-1 { color:var(--green); } .rank-2 { color:var(--accent); } .rank-3 { color:var(--orange); } .rank-4 { color:var(--red); }
+  .query-table { background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:20px;margin-bottom:32px; }
+  .query-table h3 { font-size:0.82rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:14px; }
+  .query-table table { width:100%;border-collapse:collapse;font-size:0.78rem; }
+  .query-table th { text-align:left;padding:6px 8px;font-size:0.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;border-bottom:1px solid var(--card-border); }
+  .query-table td { padding:6px 8px;border-bottom:1px solid rgba(255,255,255,0.03); }
+  .query-table tr:last-child td { border-bottom:none; }
+  .insight { background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:20px;margin-bottom:32px; }
+  .insight h3 { font-size:0.82rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:14px; }
+  .insight p { font-size:0.88rem;line-height:1.6;color:var(--text);margin-bottom:10px; }
+  .insight strong { color:#fff; }
+  .insight .key { color:var(--green);font-weight:600; }
+  .footer { text-align:center;color:var(--muted);font-size:0.75rem;padding-top:16px;border-top:1px solid var(--card-border); }
+  .footer a { color:var(--accent);text-decoration:none; }
+  code { background:rgba(255,255,255,0.06);padding:1px 5px;border-radius:3px;font-size:0.8em; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <h1>PPR Engine Shootout — 11 Queries</h1>
+    <div class="subtitle">Full national dataset · Stress queries target worst-case engine performance · 5 engines</div>
+    <div class="badge-row">
+      <span class="badge"><strong>🏆 Zig</strong> 0.464s</span>
+      <span class="badge"><strong>🥈 Polars</strong> 1.025s</span>
+      <span class="badge"><strong>🥉 DuckDB</strong> 1.472s</span>
+      <span class="badge">783,755 transactions · 92 MB · 2010 – May 2026</span>
+    </div>
+  </div>
+
+  <div class="insight" style="margin-bottom:32px;">
+    <h3>📋 What This Benchmark Tests</h3>
+    <p>This benchmark compares <strong>DuckDB, Polars, Pandas, Dask, and Zig</strong> against Ireland's Property Price Register — 783K residential property transactions, 92 MB, spanning 2010–May 2026 (fresh from the weekly cron job). Each engine runs <strong>11 identical analytical queries</strong> under a 4-core constraint on a Proxmox LXC container (16 GiB RAM, 512 MB swap).</p>
+    <p><span class="key">3 categories of stress:</span> Standard aggregations (Q1–Q6: GROUP BY, window functions, string ops), compute-intensive (Q7–Q8: self-joins, YoY shifts via lag), and IO/hash-table intensive (Q9–Q11: 5D GROUP BY, quantile distributions, dense ranking). Designed to push each engine to its architectural limits — Python-boundary overhead, distributed shuffle costs, in-memory vs mmap tradeoffs.</p>
+    <p><span class="key">Key takeaways:</span> Zig dominates (0.46s) — compiled to a native binary with zero overhead. Polars leads Python engines (1.03s). DuckDB is 3× slower than Zig but <strong>8× more memory efficient</strong> than Pandas. Dask is 24× slower than Zig — at 92 MB, distributed compute is pure overhead. The memory watchdog prevented yesterday's swap-crash from recurring.</p>
+  </div>
+
+  <div class="stats">
+    <div class="stat-card"><div class="num accent">783,755</div><div class="label">Transactions</div></div>
+    <div class="stat-card"><div class="num orange">92 MB</div><div class="label">CSV Data</div></div>
+    <div class="stat-card"><div class="num green">11</div><div class="label">Queries</div></div>
+    <div class="stat-card"><div class="num purple">700K</div><div class="label">Repeat-sale pairs</div></div>
+    <div class="stat-card"><div class="num orange">2010–2026</div><div class="label">Date Range (fresh weekly cron)</div></div>
+    <div class="stat-card"><div class="num accent">16 GiB</div><div class="label">RAM (LXC)</div></div>
+    <div class="stat-card"><div class="num red">512 MB</div><div class="label">Swap</div></div>
+  </div>
+
+  <div class="leaderboard">
+    <h3 style="font-size:0.82rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:12px;">
+      11-Query Benchmark · Full national PPR (dashboard cron, fresh through May 2026)
+    </h3>
+    <table>
+      <thead><tr><th>Rank</th><th>Engine</th><th>Ingest</th><th class="num">Queries</th><th class="num">Total</th><th class="num">× Zig</th><th class="num">Peak RSS</th></tr></thead>
+      <tbody>
+        <tr><td class="rank-1">🥇</td><td>Zig</td><td>0.305s</td><td class="num">0.158s</td><td class="num"><strong>0.464s</strong></td><td class="num">1.0×</td><td class="num">0.8 GiB</td></tr>
+        <tr><td class="rank-2">🥈</td><td>Polars</td><td>0.096s</td><td class="num">0.929s</td><td class="num"><strong>1.025s</strong></td><td class="num">2.2×</td><td class="num">0.5 GiB</td></tr>
+        <tr><td class="rank-3">🥉</td><td>DuckDB</td><td>0.265s</td><td class="num">1.207s</td><td class="num"><strong>1.472s</strong></td><td class="num">3.2×</td><td class="num">0.1 GiB</td></tr>
+        <tr><td>&ensp;</td><td>Pandas</td><td>1.373s</td><td class="num">3.177s</td><td class="num"><strong>4.550s</strong></td><td class="num">9.8×</td><td class="num">1.0 GiB</td></tr>
+        <tr><td>&ensp;</td><td>Dask</td><td>1.085s</td><td class="num">10.082s</td><td class="num"><strong>11.168s</strong></td><td class="num">24.1×</td><td class="num">0.8 GiB</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="chart-card" style="margin-bottom:32px;">
+    <h3>Total Time by Engine — 11 Queries</h3>
+    <canvas id="totalChart" height="180"></canvas>
+  </div>
+
+  <div class="chart-row cols-2">
+    <div class="chart-card">
+      <h3>Ingest Time</h3>
+      <canvas id="ingestChart" height="130"></canvas>
+    </div>
+    <div class="chart-card">
+      <h3>Query Execution Time</h3>
+      <canvas id="queryChart" height="130"></canvas>
+    </div>
+  </div>
+
+  <div class="query-table">
+    <h3>Query Breakdown — Stress Profile</h3>
+    <table>
+      <thead><tr><th>#</th><th>Type</th><th>Description</th><th>Stress Target</th></tr></thead>
+      <tbody>
+        <tr><td>Q1–Q5</td><td>Standard</td><td>Avg by county, monthly volume, top-10 median, price histogram, county×year pivot</td><td>Baseline aggregation</td></tr>
+        <tr><td>Q6</td><td>String + agg</td><td>Address normalization + duplicate detection</td><td>String ops, Python boundary</td></tr>
+        <tr><td>Q7</td><td style="color:var(--orange)">Self-join</td><td>Price turnaround: first vs last sale per property</td><td>CTE + self-join on 690K rows</td></tr>
+        <tr><td>Q8</td><td style="color:var(--orange)">Window</td><td>Year-over-year price change per county</td><td>Window shift/lag over partitions</td></tr>
+        <tr><td>Q9</td><td style="color:var(--red)">5D GROUP BY</td><td>County × year × quarter × bucket × size class</td><td>Hash table with ~75K+ groups</td></tr>
+        <tr><td>Q10</td><td style="color:var(--red)">Quantile</td><td>Percentile distribution (P10–P90) per county/year</td><td>Ordered aggregation × 5 quantiles</td></tr>
+        <tr><td>Q11</td><td style="color:var(--red)">Dense rank</td><td>Top-5 and bottom-5 per county per year</td><td>Window sort per partition</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="insight">
+    <h3>⚡ Key Findings</h3>
+    <p><strong>Zig dominates at 0.464s</strong> — 2.2× faster than Polars and 3.2× faster than DuckDB. All 11 queries run in <strong>0.158s</strong> of pure computation. Zig compiles to a single binary with zero runtime overhead, no query planner, no garbage collector — just hash maps and arrays. Ingest is slower than Polars (0.305s vs 0.096s) because CSV parsing is hand-written; a faster parser would push Zig below 0.3s total.</p>
+    <p><strong>Polars leads the Python engines</strong> at 1.025s — Rust-native CSV ingestion (0.096s) keeps it ahead of DuckDB. The query time gap (0.929s vs 1.207s) is narrow; Polars wins on faster parsing.</p>
+    <p><strong>DuckDB dominates memory efficiency</strong> — 0.1 GiB RSS vs Polars' 0.5 GiB. DuckDB processes everything in a single in-process SQL engine with no intermediate copies. Pandas peaks at 1.0 GiB due to <code>.copy()</code> calls and intermediate DataFrames.</p>
+    <p><strong>Dask is 24× slower than Zig</strong> — 11.2s with the threaded scheduler. Even with <code>processes=False</code>, Dask's shuffle scheduler triggers on every GROUP BY — data is re-partitioned even within a single process. At 92 MB, Dask's distributed overhead is ~9s of pure tax. On a 10 GB+ dataset this would amortize; at this scale it's the wrong tool.</p>
+  </div>
+
+  <div class="insight">
+    <h3>🛡️ Memory Safety — Lessons Learned (the hard way)</h3>
+    <p><strong>Yesterday's crash:</strong> Running Dask with 4 workers and no memory cap on a 16GiB LXC with 512MB swap → OOM kill. <span class="key">Lost ~5 in-progress expanded queries</span> that were never saved to disk.</p>
+    <p><strong>Fixes applied to the benchmark script:</strong></p>
+    <p>• <span class="key">RLIMIT_AS</span> set to 4× physical RAM (not 1× — DuckDB uses mmap for virtual address space, and a tight cap causes spurious "memory allocation of N bytes failed" crashes even with 14GiB free)</p>
+    <p>• <span class="key">psutil watchdog</span> checks RSS after every engine and aborts at 85% (<code>MemoryError</code> before swap)</p>
+    <p>• <span class="key">Dask</span>: 2 workers, <code>memory_limit='4GiB'</code> — kills a worker before it OOMs the machine</p>
+    <p>• <span class="key">gc.collect()</span> between engines to prevent memory accumulation</p>
+    <p>• <span class="key">Backup first</span>: always <code>cp script.py script.py.bak.$(date +%Y%m%d_%H%M%S)</code> before running. The expanded ~11-query version was lost when the machine swap-crashed.</p>
+  </div>
+
+  <div class="insight">
+    <h3>📊 Query Stress Analysis</h3>
+    <p><strong>Q9 (5D GROUP BY)</strong> — DuckDB's hash table handles this natively. Polars' grouped aggregation is vectorized. Pandas creates a single wide table. Dask shuffles across workers.</p>
+    <p><strong>Q10 (Percentiles)</strong> — DuckDB's <code>QUANTILE_CONT</code> is fastest (the Q7-CTE-style approach worked cleanly). Polars' <code>.quantile()</code> per group is slightly slower. Pandas uses lambda-per-group which is slower. Dask must compute to Pandas for quantiles.</p>
+    <p><strong>Q11 (Dense rank)</strong> — All engines handle ranking well. DuckDB: <code>DENSE_RANK() OVER()</code>. Polars: <code>.rank("dense").over()</code>. Dask: <code>.rank()</code> triggers a shuffle. This query stresses the sort/partition path.</p>
+  </div>
+
+  <div class="footer">
+    <strong>PPR Engine Benchmark v6 — 11 Queries</strong> &middot; Data: propertypriceregister.ie via dashboard cron (ppr.db)<br>
+    <span style="opacity:0.6">783,755 rows · 92 MB · 2010 – May 2026 · 4 cores · LXC on Proxmox VE · 16 GiB RAM · 5 engines (DuckDB/Polars/Pandas/Dask/Zig)</span>
+  </div>
+</div>
+
+<script>
+const ENGINES = ['Zig', 'Polars', 'DuckDB', 'Pandas', 'Dask'];
+const TOTAL   = [0.464, 1.025, 1.472, 4.550, 11.168];
+const INGEST  = [0.305, 0.096, 0.265, 1.373, 1.085];
+const QUERIES = [0.158, 0.929, 1.207, 3.177, 10.082];
+const COLORS  = ['#a78bfa', '#34d399', '#6c8cff', '#fbbf24', '#f87171'];
+
+Chart.defaults.color = '#6b7394';
+Chart.defaults.font.family = "'Inter', -apple-system, sans-serif";
+
+new Chart(document.getElementById('totalChart'), {
+  type: 'bar',
+  data: {
+    labels: ENGINES,
+    datasets: [{
+      label: 'Total Time (s)',
+      data: TOTAL,
+      backgroundColor: COLORS,
+      borderRadius: 4,
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { grid: { display: false } },
+      y: { grid: { color: 'rgba(255,255,255,0.04)' }, title: { display: true, text: 'Seconds' } }
+    }
+  }
+});
+
+new Chart(document.getElementById('ingestChart'), {
+  type: 'bar',
+  data: {
+    labels: ENGINES,
+    datasets: [{
+      label: 'Ingest (s)',
+      data: INGEST,
+      backgroundColor: COLORS.map(c => c + '99'),
+      borderRadius: 3,
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { grid: { display: false } },
+      y: { grid: { color: 'rgba(255,255,255,0.04)' }, beginAtZero: true }
+    }
+  }
+});
+
+new Chart(document.getElementById('queryChart'), {
+  type: 'bar',
+  data: {
+    labels: ENGINES,
+    datasets: [{
+      label: 'Queries (s)',
+      data: QUERIES,
+      backgroundColor: COLORS,
+      borderRadius: 3,
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { grid: { display: false } },
+      y: { grid: { color: 'rgba(255,255,255,0.04)' }, beginAtZero: true }
+    }
+  }
+});
+</script>
+</body>
+</html>
