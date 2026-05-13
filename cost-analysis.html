@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Model Cost Analysis — SQL Data Consulting</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+</head>
+<body>
+
+<div class="banner">
+  <a href="/" class="banner-brand">SQL Data <small>Consulting</small></a>
+</div>
+
+<div class="sidebar">
+  <div class="sidebar-section">Navigate</div>
+  <a href="/">Home</a>
+  <a href="/benchmark.html">Benchmark</a>
+  <a href="/usage.html">Usage & Cost</a>
+  <a href="/cost-analysis.html" class="active">Cost Analysis</a>
+  <a href="/methodology.html">Methodology</a>
+  <a href="/contact.html">Contact</a>
+</div>
+
+<div class="main">
+
+  <h1>Model Cost Analysis</h1>
+  <div class="subtitle">
+    Token economics across leading LLMs — and how feedback loops close the gap.
+  </div>
+
+  <p class="lead">
+    The 30× price gap between DeepSeek V4 Flash and Claude Opus looks enormous —
+    until you ask: <em>how many times can Flash retry before it costs the same as one Opus call?</em>
+    That number — the <strong>feedback scaler</strong> — tells you when token economics
+    favour cheap models with iteration over expensive models with precision.
+  </p>
+
+  <h2>Cost per task (10K prompt + 2K output)</h2>
+  <p>One-shot cost for a typical exchange. The gap between Flash ($0.002)
+  and Opus ($0.30) is <strong>150×</strong>.</p>
+
+  <div class="chart-container" style="max-width:700px;">
+    <canvas id="taskCostChart" height="300"></canvas>
+  </div>
+
+  <h2>The Feedback Scaler</h2>
+  <p>How many retries / feedback iterations can you run with a cheap model
+  before it costs the same as <em>one</em> call to the expensive model?</p>
+
+  <div class="chart-container" style="max-width:700px;">
+    <canvas id="scalerChart" height="280"></canvas>
+  </div>
+
+  <div class="callout" style="max-width:700px;">
+    <p><strong>Reading the scaler:</strong> DeepSeek V4 Flash can retry <strong>30 times</strong>
+    before matching the cost of one Claude Sonnet 4 call. If those 30 iterations of
+    summarisation, verification, and self-correction produce a better result than one
+    Sonnet call — and they often do — the cheap model is the economically rational choice.
+    The break-even point where more tokens of <em>computation</em> (feedback, CoT,
+    ensembling) substitute for more parameters of <em>model capacity</em>.</p>
+  </div>
+
+  <h2>Cost per million output tokens</h2>
+  <p>Output is where the real cost lives. A single long-generation task
+  (e.g., code synthesis, report writing) costs dramatically more on premium models.</p>
+
+  <div class="chart-container" style="max-width:700px;">
+    <canvas id="outputCostChart" height="300"></canvas>
+  </div>
+
+  <h2>Our actual token usage (daily estimate)</h2>
+  <p>Daily estimated token consumption from local Hermes agent sessions.
+  Each message ~800 tokens (500 prompt + 300 completion).</p>
+
+  <div class="chart-container" style="max-width:700px;">
+    <canvas id="tokenUsageChart" height="200"></canvas>
+  </div>
+
+  <div class="footer">
+    <p>SQL Data Consulting &middot; Pricing from Hermes models cache, May 2026</p>
+  </div>
+
+</div>
+
+<script>
+Chart.defaults.font.family = "'Inter', -apple-system, sans-serif";
+Chart.defaults.font.size = 11;
+Chart.defaults.color = '#6b7280';
+
+// Representative pricing (deduplicated from models cache)
+const MODELS = [
+  { name: 'DeepSeek V4 Flash',    group: 'DeepSeek',  input: 0.14,  output: 0.28,  color: '#34d399' },
+  { name: 'DeepSeek Reasoner',     group: 'DeepSeek',  input: 0.14,  output: 0.28,  color: '#6ee7b7' },
+  { name: 'DeepSeek V4 Pro',      group: 'DeepSeek',  input: 1.74,  output: 3.48,  color: '#059669' },
+  { name: 'GPT-4o Mini',           group: 'OpenAI',    input: 0.15,  output: 0.60,  color: '#93c5fd' },
+  { name: 'GPT-4o',                group: 'OpenAI',    input: 2.50,  output: 10.0,  color: '#3b82f6' },
+  { name: 'o4-mini',               group: 'OpenAI',    input: 1.10,  output: 4.40,  color: '#1d4ed8' },
+  { name: 'o3',                    group: 'OpenAI',    input: 2.00,  output: 8.00,  color: '#1e3a5f' },
+  { name: 'Claude Sonnet 4',       group: 'Anthropic', input: 3.00,  output: 15.0,  color: '#f97316' },
+  { name: 'Claude Opus 4',         group: 'Anthropic', input: 15.0,  output: 75.0,  color: '#9a3412' },
+  { name: 'Gemini 2.5 Flash',      group: 'Google',    input: 0.30,  output: 2.50,  color: '#a78bfa' },
+  { name: 'Gemini 2.5 Pro',        group: 'Google',    input: 1.25,  output: 10.0,  color: '#7c3aed' },
+  { name: 'Grok 3 Mini',           group: 'xAI',       input: 0.30,  output: 0.50,  color: '#f472b6' },
+  { name: 'Grok 3',                group: 'xAI',       input: 3.00,  output: 15.0,  color: '#ec4899' },
+  { name: 'Qwen 3 235B',           group: 'Qwen',      input: 0.29,  output: 1.15,  color: '#fbbf24' },
+];
+
+// Cost per task (10K prompt + 2K output)
+const TASK_PROMPT = 10000;
+const TASK_OUTPUT = 2000;
+
+const taskCosts = MODELS.map(m => ({
+  ...m,
+  taskCost: (TASK_PROMPT * m.input / 1e6) + (TASK_OUTPUT * m.output / 1e6)
+}));
+
+// Chart 1: Task cost (log scale bar)
+new Chart(document.getElementById('taskCostChart'), {
+  type: 'bar',
+  data: {
+    labels: taskCosts.map(m => m.name),
+    datasets: [{
+      label: 'Cost per task ($)',
+      data: taskCosts.map(m => m.taskCost),
+      backgroundColor: taskCosts.map(m => m.color),
+      borderRadius: 3,
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          afterLabel: function(ctx) {
+            const m = taskCosts[ctx.dataIndex];
+            return `Input: $${m.input}/M · Output: $${m.output}/M`;
+          }
+        }
+      }
+    },
+    scales: {
+      x: { grid: { color: 'rgba(0,0,0,0.05)' }, type: 'logarithmic',
+           title: { display: true, text: 'Cost ($) — log scale' } },
+      y: { grid: { display: false } }
+    }
+  }
+});
+
+// Chart 2: Feedback scaler (how many retries of Flash = 1 call of each model)
+const flashTaskCost = taskCosts.find(m => m.name === 'DeepSeek V4 Flash').taskCost;
+const scalerData = taskCosts
+  .filter(m => m.name !== 'DeepSeek V4 Flash')
+  .map(m => ({
+    ...m,
+    retries: Math.round(m.taskCost / flashTaskCost)
+  }))
+  .sort((a, b) => a.retries - b.retries);
+
+new Chart(document.getElementById('scalerChart'), {
+  type: 'bar',
+  data: {
+    labels: scalerData.map(m => m.name),
+    datasets: [{
+      label: 'Flash retries to match one call',
+      data: scalerData.map(m => m.retries),
+      backgroundColor: scalerData.map(m => m.color),
+      borderRadius: 3,
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true,
+    plugins: {
+      legend: { display: false },
+    },
+    scales: {
+      x: { grid: { color: 'rgba(0,0,0,0.05)' }, beginAtZero: true,
+           title: { display: true, text: 'Retries / feedback loops' } },
+      y: { grid: { display: false } }
+    }
+  }
+});
+
+// Chart 3: Output cost per million tokens
+const sortedByOutput = [...MODELS].sort((a, b) => a.output - b.output);
+
+new Chart(document.getElementById('outputCostChart'), {
+  type: 'bar',
+  data: {
+    labels: sortedByOutput.map(m => m.name),
+    datasets: [{
+      label: 'Cost per million output tokens ($)',
+      data: sortedByOutput.map(m => m.output),
+      backgroundColor: sortedByOutput.map(m => m.color),
+      borderRadius: 3,
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { grid: { color: 'rgba(0,0,0,0.05)' }, beginAtZero: true,
+           title: { display: true, text: '$/M output tokens' } },
+      y: { grid: { display: false } }
+    }
+  }
+});
+
+// Chart 4: Token usage from session data
+fetch('pages/usage_data.json')
+  .then(r => r.json())
+  .then(data => {
+    const dates = data.daily.map(d => d.date.slice(5));
+    const tokens = data.daily.map(d => (d.messages || 0) * 800 / 1000); // in K tokens
+
+    new Chart(document.getElementById('tokenUsageChart'), {
+      type: 'bar',
+      data: {
+        labels: dates,
+        datasets: [{
+          label: 'Estimated daily tokens (K)',
+          data: tokens,
+          backgroundColor: '#6c8cff',
+          borderRadius: 3,
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { display: false },
+        },
+        scales: {
+          x: { grid: { display: false }, ticks: { maxTicksLimit: 12 } },
+          y: { grid: { color: 'rgba(0,0,0,0.05)' }, beginAtZero: true,
+               title: { display: true, text: 'Tokens (thousands)' } }
+        }
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
