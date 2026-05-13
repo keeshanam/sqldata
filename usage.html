@@ -39,11 +39,11 @@
 
   <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:28px;">
     <div class="card" style="text-align:center;">
-      <div style="font-size:1.8rem;font-weight:700;color:var(--accent);">575</div>
+      <div style="font-size:1.8rem;font-weight:700;color:var(--accent);">576</div>
       <div style="font-size:0.78rem;color:var(--text-muted);">Sessions</div>
     </div>
     <div class="card" style="text-align:center;">
-      <div style="font-size:1.8rem;font-weight:700;color:#34d399;">$137</div>
+      <div style="font-size:1.8rem;font-weight:700;color:#34d399;">$22</div>
       <div style="font-size:0.78rem;color:var(--text-muted);">Est. Total Cost</div>
     </div>
     <div class="card" style="text-align:center;">
@@ -51,7 +51,7 @@
       <div style="font-size:0.78rem;color:var(--text-muted);">Days</div>
     </div>
     <div class="card" style="text-align:center;">
-      <div style="font-size:1.8rem;font-weight:700;color:#f87171;">$65</div>
+      <div style="font-size:1.8rem;font-weight:700;color:#f87171;">$10</div>
       <div style="font-size:0.78rem;color:var(--text-muted);">Peak Day (28 Apr)</div>
     </div>
   </div>
@@ -65,13 +65,13 @@
   </div>
 
   <h2>Spike Analysis</h2>
-  <p>The 27–28 April spike accounts for <strong>46% of total sessions</strong> and <strong>67% of total cost</strong>.
+  <p>The 27–28 April spike accounts for <strong>46% of total sessions</strong> and <strong>66% of total cost</strong>.
   These were cron-driven orchestrator runs using the <strong>deepseek-v4-pro</strong> model for
-  Planka Kanban review cycles. After switching to deepseek-v4-flash on 28 April,
-  daily cost fell from <strong>$65 → ~$3/day</strong> — a <strong>95% reduction</strong>.</p>
+  Planka Kanban review cycles ($1.74/M input, $3.48/M output). After switching to deepseek-v4-flash
+  on 28 April ($0.14/M input, $0.28/M output), daily cost fell from <strong>$10 → ~$1/day</strong> —
+  a <strong>90% reduction</strong>.</p>
 
-  <div class="card" style="max-width:700px;">
-    <h3>Cost breakdown by model</h3>
+  <h2>Cost breakdown by model</h2>
     <table style="width:100%;border-collapse:collapse;font-size:0.88rem;margin-top:12px;">
       <thead>
         <tr>
@@ -82,7 +82,6 @@
       </thead>
       <tbody id="modelBreakdown"></tbody>
     </table>
-  </div>
 
   <div class="card" style="max-width:700px;">
     <h3>Largest sessions (by message count)</h3>
@@ -100,11 +99,14 @@
   </div>
 
   <h2>Methodology</h2>
-  <p>Costs are estimated from message count — each message assumed ~3,000 tokens on average
-  (2,000 prompt + 1,000 completion), which is conservative for short exchanges but
-  underestimates long-context sessions. Actual API billing data from DeepSeek's dashboard
-  would give exact figures. The session data comes from local Hermes agent logs;
-  sessions created by automated cron jobs and gateway integrations are included.</p>
+  <p>Costs are <strong>estimated</strong> from message count — each message assumed ~800 tokens
+  (500 prompt + 300 completion). Pricing from the Hermes models cache: deepseek-v4-flash at
+  <strong>$0.14/M input + $0.28/M output</strong>, deepseek-v4-pro at <strong>$1.74/M input + $3.48/M output</strong>.
+  Actual API billing from DeepSeek's dashboard would give exact figures — the user has only ever
+  topped up <strong>$40 total</strong>, so the $22 estimate is consistent with real spend.
+  Discrepancies may come from prompt caching (discounts), free tier credits, or per-session
+  token variance not captured by the fixed per-message estimate. Session data from local
+  Hermes agent logs; automated cron jobs and gateway integrations are included.</p>
 
   <div class="footer">
     <p>SQL Data Consulting &middot; Dublin, Ireland</p>
