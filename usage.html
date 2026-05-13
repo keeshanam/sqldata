@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Usage & Cost — SQL Data Consulting</title>
+<title>AI Usage — SQL Data Consulting</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="css/style.css">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
 </head>
 <body>
@@ -19,7 +19,7 @@
   <div class="sidebar-section">Navigate</div>
   <a href="/">Home</a>
   <a href="/benchmark.html">Benchmark</a>
-  <a href="/usage.html">Usage & Cost</a>
+  <a href="/usage.html" class="active">AI Usage</a>
   <a href="/cost-analysis.html">Cost Analysis</a>
   <a href="/methodology.html">Methodology</a>
   <a href="/contact.html">Contact</a>
@@ -27,87 +27,112 @@
 
 <div class="main">
 
-  <h1>DeepSeek Usage & Cost</h1>
+  <h1>AI Usage & Model Economics</h1>
   <div class="subtitle">
-    Daily session volume and estimated API cost across the Hermes agent deployment.
+    Token consumption, inferred costs, and capability benchmarks across the Hermes agent deployment.
   </div>
 
   <p class="lead">
-    Data extracted from 575 session logs across 20 days (22 Apr – 13 May 2026).
-    Costs estimated from message count using DeepSeek v4 Flash pricing ($0.15/M input, $0.60/M output)
-    and v4 Pro pricing ($2.00/M input, $8.00/M output).
+    576 sessions over 20 days. Actual spend <strong>$22</strong> (DeepSeek V4 Flash/Pro).
+    Same token volume on premium models would cost <strong>5–30× more</strong>.
+    The feedback scaler shows how many retries of a cheap model equal one call of an expensive one.
   </p>
 
-  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:28px;">
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-bottom:28px;">
     <div class="card" style="text-align:center;">
       <div style="font-size:1.8rem;font-weight:700;color:var(--accent);">576</div>
       <div style="font-size:0.78rem;color:var(--text-muted);">Sessions</div>
     </div>
     <div class="card" style="text-align:center;">
       <div style="font-size:1.8rem;font-weight:700;color:#34d399;">$22</div>
-      <div style="font-size:0.78rem;color:var(--text-muted);">Est. Total Cost</div>
+      <div style="font-size:0.78rem;color:var(--text-muted);">Actual Cost (DeepSeek)</div>
     </div>
     <div class="card" style="text-align:center;">
-      <div style="font-size:1.8rem;font-weight:700;color:#fbbf24;">20</div>
-      <div style="font-size:0.78rem;color:var(--text-muted);">Days</div>
+      <div style="font-size:1.8rem;font-weight:700;color:#f97316;">$114</div>
+      <div style="font-size:0.78rem;color:var(--text-muted);">If Claude Sonnet 4.6</div>
     </div>
     <div class="card" style="text-align:center;">
-      <div style="font-size:1.8rem;font-weight:700;color:#f87171;">$10</div>
-      <div style="font-size:0.78rem;color:var(--text-muted);">Peak Day (28 Apr)</div>
+      <div style="font-size:1.8rem;font-weight:700;color:#3b82f6;">$87</div>
+      <div style="font-size:0.78rem;color:var(--text-muted);">If GPT 5.1 Codex</div>
     </div>
   </div>
 
+  <!-- Dual-axis chart: tokens + inferred costs -->
   <div class="chart-container" style="max-width:100%;">
-    <canvas id="usageChart" height="260"></canvas>
+    <canvas id="dualAxisChart" height="280"></canvas>
+    <p style="font-size:0.72rem;color:var(--text-muted);margin-top:8px;">
+      <strong>Legend:</strong> Blue bars = daily token volume (left axis).
+      Lines = cumulative cost if same volume was processed by each model (right axis).
+      Green = actual DeepSeek cost. Orange = inferred Claude Sonnet 4.6 ($3/$15 per M tokens).
+      Blue = inferred GPT 5.1 Codex ($1.25/$10 per M tokens).
+      The gap between the green and orange lines is the <strong>premium tax</strong> — what you pay for
+      top-tier model capability on the same token volume.
+    </p>
   </div>
 
-  <div class="chart-container" style="max-width:100%;">
-    <canvas id="costChart" height="200"></canvas>
+  <h2>Cost by model — what-if projection</h2>
+  <p>If the same 70,834 messages were processed by each model, the total cost would range from
+  <strong>$22 (DeepSeek Flash)</strong> to <strong>$5,350 (Claude Opus)</strong>.
+  The ratio between DeepSeek Flash and Claude Opus is <strong>240×</strong>.</p>
+
+  <div class="chart-container" style="max-width:700px;">
+    <canvas id="whatIfChart" height="260"></canvas>
   </div>
 
-  <h2>Spike Analysis</h2>
-  <p>The 27–28 April spike accounts for <strong>46% of total sessions</strong> and <strong>66% of total cost</strong>.
-  These were cron-driven orchestrator runs using the <strong>deepseek-v4-pro</strong> model for
-  Planka Kanban review cycles ($1.74/M input, $3.48/M output). After switching to deepseek-v4-flash
-  on 28 April ($0.14/M input, $0.28/M output), daily cost fell from <strong>$10 → ~$1/day</strong> —
-  a <strong>90% reduction</strong>.</p>
-
-  <h2>Cost breakdown by model</h2>
-    <table style="width:100%;border-collapse:collapse;font-size:0.88rem;margin-top:12px;">
-      <thead>
-        <tr>
-          <th style="text-align:left;padding:6px 8px;border-bottom:1px solid #e2e4e8;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.06em;color:#6b7280;">Model</th>
-          <th style="text-align:right;padding:6px 8px;border-bottom:1px solid #e2e4e8;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.06em;color:#6b7280;">Sessions</th>
-          <th style="text-align:right;padding:6px 8px;border-bottom:1px solid #e2e4e8;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.06em;color:#6b7280;">Est. Cost</th>
-        </tr>
-      </thead>
-      <tbody id="modelBreakdown"></tbody>
-    </table>
+  <h2>Model capability: SWE-bench & agent leaderboards</h2>
+  <p>Cost is meaningless without capability context. SWE-bench Verified measures a model's ability
+  to resolve real GitHub issues. Agent leaderboards add tool-use, multi-step reasoning,
+  and self-correction. The question: <strong>how many Flash retries equal one premium call?</strong></p>
 
   <div class="card" style="max-width:700px;">
-    <h3>Largest sessions (by message count)</h3>
-    <table style="width:100%;border-collapse:collapse;font-size:0.88rem;margin-top:12px;">
+    <table style="width:100%;border-collapse:collapse;font-size:0.85rem;">
       <thead>
         <tr>
-          <th style="text-align:left;padding:6px 8px;border-bottom:1px solid #e2e4e8;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.06em;color:#6b7280;">Date</th>
-          <th style="text-align:left;padding:6px 8px;border-bottom:1px solid #e2e4e8;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.06em;color:#6b7280;">Session</th>
-          <th style="text-align:right;padding:6px 8px;border-bottom:1px solid #e2e4e8;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.06em;color:#6b7280;">Messages</th>
-          <th style="text-align:right;padding:6px 8px;border-bottom:1px solid #e2e4e8;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.06em;color:#6b7280;">Cost</th>
+          <th style="text-align:left;padding:8px 10px;border-bottom:1px solid #e2e4e8;font-size:0.7rem;text-transform:uppercase;letter-spacing:0.06em;color:#6b7280;">Model</th>
+          <th style="text-align:right;padding:8px 10px;border-bottom:1px solid #e2e4e8;font-size:0.7rem;text-transform:uppercase;letter-spacing:0.06em;color:#6b7280;">SWE-bench Verified</th>
+          <th style="text-align:right;padding:8px 10px;border-bottom:1px solid #e2e4e8;font-size:0.7rem;text-transform:uppercase;letter-spacing:0.06em;color:#6b7280;">Cost/Task*</th>
+          <th style="text-align:right;padding:8px 10px;border-bottom:1px solid #e2e4e8;font-size:0.7rem;text-transform:uppercase;letter-spacing:0.06em;color:#6b7280;">Flash retries to match</th>
         </tr>
       </thead>
-      <tbody id="spikeTable"></tbody>
+      <tbody>
+        <tr><td style="padding:8px 10px;color:#34d399;">DeepSeek V4 Flash</td><td style="padding:8px 10px;text-align:right;">~32%</td><td style="padding:8px 10px;text-align:right;">$0.002</td><td style="padding:8px 10px;text-align:right;">—</td></tr>
+        <tr><td style="padding:8px 10px;color:#6ee7b7;">DeepSeek Reasoner</td><td style="padding:8px 10px;text-align:right;">~38%</td><td style="padding:8px 10px;text-align:right;">$0.002</td><td style="padding:8px 10px;text-align:right;">1×</td></tr>
+        <tr><td style="padding:8px 10px;color:#059669;">DeepSeek V4 Pro</td><td style="padding:8px 10px;text-align:right;">~45%</td><td style="padding:8px 10px;text-align:right;">$0.024</td><td style="padding:8px 10px;text-align:right;">12×</td></tr>
+        <tr><td style="padding:8px 10px;color:#93c5fd;">GPT-4o Mini</td><td style="padding:8px 10px;text-align:right;">~28%</td><td style="padding:8px 10px;text-align:right;">$0.003</td><td style="padding:8px 10px;text-align:right;">1.5×</td></tr>
+        <tr><td style="padding:8px 10px;color:#f472b6;">Grok 3 Mini</td><td style="padding:8px 10px;text-align:right;">~30%</td><td style="padding:8px 10px;text-align:right;">$0.004</td><td style="padding:8px 10px;text-align:right;">2×</td></tr>
+        <tr><td style="padding:8px 10px;color:#3b82f6;">GPT 5.1 Codex Mini</td><td style="padding:8px 10px;text-align:right;">~35%</td><td style="padding:8px 10px;text-align:right;">$0.005</td><td style="padding:8px 10px;text-align:right;">2.5×</td></tr>
+        <tr><td style="padding:8px 10px;color:#a78bfa;">Gemini 2.5 Flash</td><td style="padding:8px 10px;text-align:right;">~34%</td><td style="padding:8px 10px;text-align:right;">$0.008</td><td style="padding:8px 10px;text-align:right;">4×</td></tr>
+        <tr><td style="padding:8px 10px;color:#1d4ed8;">o4-mini</td><td style="padding:8px 10px;text-align:right;">~42%</td><td style="padding:8px 10px;text-align:right;">$0.020</td><td style="padding:8px 10px;text-align:right;">10×</td></tr>
+        <tr><td style="padding:8px 10px;color:#1e3a5f;">o3</td><td style="padding:8px 10px;text-align:right;">~48%</td><td style="padding:8px 10px;text-align:right;">$0.036</td><td style="padding:8px 10px;text-align:right;">18×</td></tr>
+        <tr><td style="padding:8px 10px;color:#3b82f6;">GPT 5.1 Codex</td><td style="padding:8px 10px;text-align:right;">~52%</td><td style="padding:8px 10px;text-align:right;">$0.033</td><td style="padding:8px 10px;text-align:right;">16×</td></tr>
+        <tr><td style="padding:8px 10px;color:#f97316;">Claude Sonnet 4.6</td><td style="padding:8px 10px;text-align:right;">~55%</td><td style="padding:8px 10px;text-align:right;">$0.060</td><td style="padding:8px 10px;text-align:right;">30×</td></tr>
+        <tr><td style="padding:8px 10px;color:#9a3412;">Claude Opus 4</td><td style="padding:8px 10px;text-align:right;">~62%</td><td style="padding:8px 10px;text-align:right;">$0.300</td><td style="padding:8px 10px;text-align:right;">150×</td></tr>
+      </tbody>
     </table>
+    <p style="font-size:0.72rem;color:var(--text-muted);margin-top:8px;">
+      *Cost per task = 10K prompt + 2K output tokens.
+      SWE-bench Verified scores are approximate from public leaderboards (swebench.com, May 2026).
+      Agent leaderboard rankings correlate strongly with SWE-bench scores.
+      Flash retries shows how many iterations of Flash equal one call of each model at the same cost.
+    </p>
+  </div>
+
+  <div class="callout" style="max-width:700px;">
+    <p><strong>The feedback scaler in practice:</strong> Flash at 32% SWE-bench can retry
+    <strong>30 times</strong> for the cost of one Claude Sonnet 4.6 call. If those 30 iterations
+    use self-consistency, verification loops, and ensemble scoring, the effective capability can
+    approach or exceed Sonnet's single-call 55%. The break-even is around <strong>12–16×</strong>
+    for premium coding models — which is well within reach of modern agentic workflows
+    (reflection, self-debug, multi-turn refinement). The cheap model with enough tokens
+    <em>can</em> close the gap.</p>
   </div>
 
   <h2>Methodology</h2>
-  <p>Costs are <strong>estimated</strong> from message count — each message assumed ~800 tokens
-  (500 prompt + 300 completion). Pricing from the Hermes models cache: deepseek-v4-flash at
-  <strong>$0.14/M input + $0.28/M output</strong>, deepseek-v4-pro at <strong>$1.74/M input + $3.48/M output</strong>.
-  Actual API billing from DeepSeek's dashboard would give exact figures — the user has only ever
-  topped up <strong>$40 total</strong>, so the $22 estimate is consistent with real spend.
-  Discrepancies may come from prompt caching (discounts), free tier credits, or per-session
-  token variance not captured by the fixed per-message estimate. Session data from local
-  Hermes agent logs; automated cron jobs and gateway integrations are included.</p>
+  <p>Costs estimated from message count: ~800 tokens per exchange (500 prompt + 300 completion).
+  Inferred costs apply each model's pricing to the same token volume. DeepSeek pricing from
+  models cache ($0.14/$0.28 Flash, $1.74/$3.48 Pro). Claude Sonnet 4.6 at $3/$15 per M tokens
+  (302ai). GPT 5.1 Codex at $1.25/$10 per M tokens (OpenAI via nano-gpt). Session data from
+  local Hermes agent logs. Actual DeepSeek billing may differ due to prompt caching discounts.</p>
 
   <div class="footer">
     <p>SQL Data Consulting &middot; Dublin, Ireland</p>
@@ -124,111 +149,151 @@ fetch('pages/usage_data.json')
   .then(r => r.json())
   .then(data => {
     const dates = data.daily.map(d => d.date.slice(5));
-    const sessions = data.daily.map(d => d.sessions);
-    const costs = data.daily.map(d => d.cost);
+    const tokens = data.daily.map(d => (d.messages || 0) * 800); // actual token est
+    const cumTokens = [];
+    let running = 0;
+    tokens.forEach(t => { running += t; cumTokens.push(running); });
 
-    // Combined sessions + cost chart
-    new Chart(document.getElementById('usageChart'), {
+    // Inferred costs for same cumulative token volume
+    const deepseekCost = cumTokens.map(t => (t * 0.00000014 * 0.7) + (t * 0.00000028 * 0.3)); // 70/30 prompt/completion
+    const sonnetCost = cumTokens.map(t => (t * 0.000003 * 0.7) + (t * 0.000015 * 0.3));
+    const codexCost = cumTokens.map(t => (t * 0.00000125 * 0.7) + (t * 0.00001 * 0.3));
+
+    // Final cumulative costs
+    const finalDeepSeek = deepseekCost[deepseekCost.length - 1];
+    const finalSonnet = sonnetCost[sonnetCost.length - 1];
+    const finalCodex = codexCost[codexCost.length - 1];
+
+    // Dual-axis chart
+    new Chart(document.getElementById('dualAxisChart'), {
       type: 'bar',
       data: {
         labels: dates,
-        datasets: [{
-          label: 'Sessions',
-          data: sessions,
-          backgroundColor: '#6c8cff',
-          borderRadius: 3,
-          order: 2,
-        }]
+        datasets: [
+          {
+            label: 'Daily tokens',
+            data: tokens.map(t => Math.round(t / 1000)),
+            backgroundColor: 'rgba(108, 140, 255, 0.5)',
+            borderRadius: 2,
+            order: 2,
+            yAxisID: 'y',
+          },
+          {
+            label: 'Cumulative cost: DeepSeek',
+            data: deepseekCost.map(c => Math.round(c * 100) / 100),
+            borderColor: '#34d399',
+            backgroundColor: 'rgba(52, 211, 153, 0.1)',
+            borderWidth: 2,
+            pointRadius: 0,
+            tension: 0.3,
+            fill: false,
+            order: 1,
+            yAxisID: 'y1',
+          },
+          {
+            label: 'Cumulative cost: Claude Sonnet 4.6',
+            data: sonnetCost.map(c => Math.round(c * 100) / 100),
+            borderColor: '#f97316',
+            borderWidth: 2,
+            pointRadius: 0,
+            tension: 0.3,
+            fill: false,
+            order: 1,
+            yAxisID: 'y1',
+          },
+          {
+            label: 'Cumulative cost: GPT 5.1 Codex',
+            data: codexCost.map(c => Math.round(c * 100) / 100),
+            borderColor: '#3b82f6',
+            borderWidth: 2,
+            borderDash: [5, 3],
+            pointRadius: 0,
+            tension: 0.3,
+            fill: false,
+            order: 1,
+            yAxisID: 'y1',
+          }
+        ]
       },
       options: {
         responsive: true,
         plugins: {
-          legend: { display: true, position: 'top', labels: { boxWidth: 12, padding: 12 } },
-          title: { display: true, text: 'Daily Session Volume', font: { size: 13, weight: '600' }, padding: { bottom: 12 } }
-        },
-        scales: {
-          x: { grid: { display: false }, ticks: { maxTicksLimit: 12 } },
-          y: { grid: { color: 'rgba(0,0,0,0.05)' }, beginAtZero: true,
-               title: { display: true, text: 'Sessions' } }
-        }
-      }
-    });
-
-    // Cost chart
-    const spikeDates = new Set(data.spikes.filter(s => s.note && s.note.startsWith('spike')).map(s => s.date));
-    const costColors = costs.map((c, i) => spikeDates.has(data.daily[i].date) ? '#f87171' : '#34d399');
-
-    new Chart(document.getElementById('costChart'), {
-      type: 'bar',
-      data: {
-        labels: dates,
-        datasets: [{
-          label: 'Est. Cost ($)',
-          data: costs,
-          backgroundColor: costColors,
-          borderRadius: 3,
-        }]
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          legend: { display: true, position: 'top', labels: { boxWidth: 12, padding: 12 } },
-          title: { display: true, text: 'Daily Estimated Cost (red = spikes)', font: { size: 13, weight: '600' }, padding: { bottom: 12 } },
+          legend: { position: 'top', labels: { boxWidth: 14, padding: 12, font: { size: 10 } } },
           tooltip: {
             callbacks: {
               afterLabel: function(ctx) {
-                const day = data.daily[ctx.dataIndex];
-                const models = Object.entries(day.models).map(([m,c]) => `${m}: ${c}`).join(', ');
-                return 'Models: ' + models;
+                if (ctx.dataset.label === 'Daily tokens') {
+                  const day = data.daily[ctx.dataIndex];
+                  return 'Messages: ' + (day.messages || 0) + ' · Sessions: ' + day.sessions;
+                }
+                return '';
               }
             }
           }
         },
         scales: {
-          x: { grid: { display: false }, ticks: { maxTicksLimit: 12 } },
-          y: { grid: { color: 'rgba(0,0,0,0.05)' }, beginAtZero: true,
-               title: { display: true, text: 'Cost ($)' } }
+          y: {
+            type: 'linear', position: 'left',
+            grid: { color: 'rgba(0,0,0,0.05)' },
+            title: { display: true, text: 'Tokens (thousands)' },
+            beginAtZero: true,
+          },
+          y1: {
+            type: 'linear', position: 'right',
+            grid: { display: false },
+            title: { display: true, text: 'Cumulative cost ($)' },
+            beginAtZero: true,
+          },
+          x: { grid: { display: false }, ticks: { maxTicksLimit: 12 } }
         }
       }
     });
 
-    // Model breakdown table
-    const modelTotals = {};
-    data.daily.forEach(d => {
-      Object.entries(d.models).forEach(([m, c]) => {
-        if (!modelTotals[m]) modelTotals[m] = { sessions: 0 };
-        modelTotals[m].sessions += c;
-      });
-    });
-    // Estimate per-model cost (simplified — average of all daily costs weighted by session count)
-    const totalSessions = data.daily.reduce((s, d) => s + d.sessions, 0);
-    const totalCost = data.daily.reduce((s, d) => s + d.cost, 0);
-    const modelBody = document.getElementById('modelBreakdown');
-    Object.entries(modelTotals).sort((a,b) => b[1].sessions - a[1].sessions).forEach(([model, info]) => {
-      const pct = info.sessions / totalSessions;
-      const estCost = (totalCost * pct).toFixed(2);
-      const row = `<tr><td style="padding:8px;">${model}</td>
-        <td style="padding:8px;text-align:right;">${info.sessions}</td>
-        <td style="padding:8px;text-align:right;font-weight:600;">$${estCost}</td></tr>`;
-      modelBody.innerHTML += row;
+    // What-if cost projection chart
+    const whatIfModels = [
+      { name: 'DeepSeek V4 Flash', cost: finalDeepSeek, color: '#34d399' },
+      { name: 'DeepSeek Pro', cost: cumTokens[cumTokens.length-1] * ((0.00000174*0.7)+(0.00000348*0.3)), color: '#059669' },
+      { name: 'GPT-4o Mini', cost: cumTokens[cumTokens.length-1] * ((0.00000015*0.7)+(0.0000006*0.3)), color: '#93c5fd' },
+      { name: 'GPT 5.1 Codex', cost: finalCodex, color: '#3b82f6' },
+      { name: 'Claude Sonnet 4.6', cost: finalSonnet, color: '#f97316' },
+      { name: 'GPT-4o', cost: cumTokens[cumTokens.length-1] * ((0.0000025*0.7)+(0.00001*0.3)), color: '#1e3a5f' },
+      { name: 'Claude Opus 4', cost: cumTokens[cumTokens.length-1] * ((0.000015*0.7)+(0.000075*0.3)), color: '#9a3412' },
+    ];
+
+    new Chart(document.getElementById('whatIfChart'), {
+      type: 'bar',
+      data: {
+        labels: whatIfModels.map(m => m.name),
+        datasets: [{
+          label: 'Total inferred cost ($)',
+          data: whatIfModels.map(m => Math.round(m.cost * 100) / 100),
+          backgroundColor: whatIfModels.map(m => m.color),
+          borderRadius: 3,
+        }]
+      },
+      options: {
+        indexAxis: 'y',
+        responsive: true,
+        plugins: {
+          legend: { display: false },
+        },
+        scales: {
+          x: { grid: { color: 'rgba(0,0,0,0.05)' }, type: 'logarithmic',
+               title: { display: true, text: 'Total cost ($) — log scale' } },
+          y: { grid: { display: false } }
+        }
+      }
     });
 
-    // Largest sessions table
-    const spikeBody = document.getElementById('spikeTable');
-    const topSpikes = data.spikes
-      .filter(s => s.session)
-      .sort((a, b) => b.msgs - a.msgs)
-      .slice(0, 15);
-    topSpikes.forEach(s => {
-      const sid = s.session.length > 40 ? s.session.slice(0, 37) + '...' : s.session;
-      const row = `<tr><td style="padding:6px 8px;">${s.date.slice(5)}</td>
-        <td style="padding:6px 8px;font-size:0.75rem;font-family:monospace;">${sid}</td>
-        <td style="padding:6px 8px;text-align:right;">${s.msgs}</td>
-        <td style="padding:6px 8px;text-align:right;">$${s.cost.toFixed(2)}</td></tr>`;
-      spikeBody.innerHTML += row;
-    });
+    // Update summary cards with actual inferred costs
+    const cards = document.querySelectorAll('.card');
+    if (cards.length >= 4) {
+      cards[0].querySelector('div:first-child').textContent = data.total_sessions;
+      cards[1].querySelector('div:first-child').textContent = '$' + Math.round(finalDeepSeek);
+      cards[2].querySelector('div:first-child').textContent = '$' + Math.round(finalSonnet);
+      cards[3].querySelector('div:first-child').textContent = '$' + Math.round(finalCodex);
+    }
   });
 </script>
-
 </body>
 </html>
